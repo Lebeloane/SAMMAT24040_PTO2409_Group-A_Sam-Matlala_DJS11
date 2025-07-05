@@ -1,15 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import  Navbar  from "./Components/Navbar"
-import  Footer  from "./Components/Footer"
+import  Layout from "./Layout/Layout"
+
 
 function App() {
 
   return (
     <Router>
-      <Navbar />
       <Routes>
+        <Route element={<Layout /> }>
+          <Route path="/" element={<h1>hello</h1>} />
+        </Route>
       </Routes>
-      <Footer />
     </Router>
   )
 }
