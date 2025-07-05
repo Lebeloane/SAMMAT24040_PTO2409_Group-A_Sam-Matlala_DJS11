@@ -2,6 +2,15 @@ import { NavLink } from "react-router-dom";
 import { useState } from "react";
 import { Fingerprint, Heart, PlayCircle, Menu, X } from "lucide-react";
 
+/**
+ * Navbar Component
+ *
+ * This component renders a navigation bar with links to different
+ * routes of the application.
+ * It includes the logo icons, link styling, and basic layout using Tailwind CSS classes.
+ * using lucide-react icons
+ * @returns {JSX.Element}
+ */
 
 const NAV_ITEMS = [
   { icon: Fingerprint, label: 'Home', path: '/' },
@@ -12,14 +21,17 @@ const NAV_ITEMS = [
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-
+  // Toggle mobile menu open/close state
+  // This function also handles the scroll behavior of the body when the menu is open
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
-
+    // Prevent scroll when menu open
     document.body.style.overflow = isMenuOpen ? 'unset' : 'hidden';
   };
 
-  
+  // Navigation item component for reusability
+  // It takes Icon, label, path and isMobile as props
+  // isMobile is used to apply different styles for mobile and desktop views
   const NavigationItem = ({ Icon, label, path, isMobile = false }) => (
     <NavLink
       to={path}
