@@ -2,11 +2,25 @@ import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Loading from './Loading';
 
-
+/**
+ * PodcastDetails Component
+ *
+ * This component displays detailed information about a specific podcast.
+ * It uses the ID from the URL parameters to fetch the podcast details.
+ *
+ * @param {Object} props - Component props
+ * @param {Function} props.fetchPodcastDetails - Function to fetch podcast details by ID
+ * @param {Object} props.podcastDetails - Object containing podcast details
+ * @param {boolean} props.isloading - Loading state indicator
+ * @param {string|null} props.error - Error message if any
+ * @returns {JSX.Element}
+ */
 function PodcastDetails({ fetchPodcastDetails, podcastDetails, error }) {
-
+  // Get the podcast ID from the URL parameters
   const { id } = useParams();
 
+  // Fetch podcast details when the component mounts or the ID changes
+  // This effect will run when the component mounts and whenever the id changes.
   useEffect(() => {
     if (id) {
       fetchPodcastDetails(id);
@@ -14,12 +28,12 @@ function PodcastDetails({ fetchPodcastDetails, podcastDetails, error }) {
   }, [id, fetchPodcastDetails]);
 
 
-
+  // Show error message if there's an error
   if (error) {
     return <div className="text-red-500 text-3xl text-center">Error: {error}</div>;
   }
 
-
+  // Show a message if no podcast details are available
   if (!podcastDetails || !podcastDetails.title) {
     return <Loading />;
   }
