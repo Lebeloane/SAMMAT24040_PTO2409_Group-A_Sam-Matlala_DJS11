@@ -7,6 +7,7 @@ import Home from "./Pages/Home"
 import Loading from "./Components/Loading"
 import PodcastLists from "./Pages/PodcastLists"
 import PodcastDetails from "./Components/PodcastDetails"
+import SeasonDetails from "./Components/SeasonDetails" 
 
 /**
  * App Component
@@ -103,6 +104,12 @@ function App() {
           <Route path="/podcasts/:id" element={
             <PodcastDetails
               fetchPodcastDetails={fetchPodcastDetails}
+              podcastDetails={podcastDetails}
+              isloading={isloading}
+              error={error}
+            />}
+          />
+          <Route path="/podcasts/:id/season/:seasonNumber" element={<SeasonDetails
               podcastDetails={podcastDetails}
               isloading={isloading}
               error={error}
