@@ -2,13 +2,14 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import { useState, useEffect } from "react"
 
 
-import  Layout from "./Layout/Layout"
-import Home from "./Pages/Home"
 import Loading from "./Components/Loading"
+import Home from "./Pages/Home"
 import PodcastLists from "./Pages/PodcastLists"
 import PodcastDetails from "./Components/PodcastDetails"
 import SeasonDetails from "./Components/SeasonDetails"
 import Favorites from "./Pages/Favourites"
+import PageNotFound from "./Pages/PageNotFound"
+import Layout from "./Layout/Layout"
 
 /**
  * App Component
@@ -93,7 +94,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route element={<Layout /> }>
+        <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/podcasts" element={
             <PodcastLists
@@ -117,6 +118,7 @@ function App() {
             />}
           />
           <Route path="/favourites" element={<Favorites />} />
+          <Route path="*" element={<PageNotFound />} />
         </Route>
       </Routes>
     </Router>
