@@ -2,14 +2,31 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import Loading from './Loading';
 
-
+/**
+ * SeasonDetails Component
+ *
+ * This component displays the episodes of a specific season for a podcast.
+ * It uses the podcast ID and season number from the URL parameters.
+ *
+ * @param {Object} props - Component props
+ * @param {Object} props.podcastDetails - Object containing podcast details
+ * @param {boolean} props.isloading - Loading state indicator
+ * @param {string|null} props.error - Error message if any
+ * @returns {JSX.Element}
+ */
 function SeasonDetails({ podcastDetails, isloading, error }) {
+  // Get the podcast ID and season number from the URL parameters
   const { id, seasonNumber } = useParams();
 
+  // Convert seasonNumber from string to number
   const seasonNum = parseInt(seasonNumber, 10);
 
+  // State for favorites
   const [favorites, setFavorites] = useState([]);
 
+  // Load favorites from localStorage on component mount
+  // This effect will run when the component mounts.
+  // It retrieves the favorites from localStorage and sets them in the state.
   useEffect(() => {
     const storedFavorites = localStorage.getItem('podcastFavorites');
     if (storedFavorites) {
@@ -17,7 +34,9 @@ function SeasonDetails({ podcastDetails, isloading, error }) {
     }
   }, []);
 
-
+  // Toggle favorite status of an episode
+  // This function is called when the user clicks the favorite button for an episode.
+    // It checks if the episode is already in favorites and either adds or removes it accordingly.
   const toggleFavorite = (episode) => {
     const favoriteItem = {
       podcastId: id,
@@ -27,6 +46,9 @@ function SeasonDetails({ podcastDetails, isloading, error }) {
       episode: episode
     };
 
+    // Check if this episode is already in favorites
+    // This checks if the episode is already in the favorites list.
+    // If it is, we remove it; if not, we add it.
     const existingIndex = favorites.findIndex(fav =>
       fav.podcastId === id &&
       fav.seasonNumber === seasonNum &&
@@ -35,17 +57,21 @@ function SeasonDetails({ podcastDetails, isloading, error }) {
 
     let updatedFavorites;
     if (existingIndex >= 0) {
-
+      // Remove from favorites
       updatedFavorites = favorites.filter((_, index) => index !== existingIndex);
     } else {
-
+      // Add to favorites
       updatedFavorites = [...favorites, favoriteItem];
     }
 
+    // Update state and localStorage
     setFavorites(updatedFavorites);
     localStorage.setItem('podcastFavorites', JSON.stringify(updatedFavorites));
   };
 
+  // Check if an episode is in favorites
+  // This function checks if a specific episode is already marked as favorite.
+  // It returns true if the episode is in the favorites list, otherwise false.
   const isEpisodeFavorite = (episode) => {
     return favorites.some(fav =>
       fav.podcastId === id &&
@@ -54,20 +80,26 @@ function SeasonDetails({ podcastDetails, isloading, error }) {
     );
   };
 
+  // Show loading state
   if (isloading) {
     return <Loading />;
   }
 
+  // Show error message if there's an error
   if (error) {
     return <div className="text-red-500 text-3xl text-center">Error: {error}</div>;
   }
 
+  // Check if podcast details are available
   if (!podcastDetails || !podcastDetails.title) {
     return <div className="text-xl text-center p-8">No podcast details available</div>;
   }
 
+  // Find the selected season
   const selectedSeason = podcastDetails.seasons?.find(season => season.season === seasonNum);
 
+  // If season not found
+  // This checks if the selected season exists in the podcast details.
   if (!selectedSeason) {
     return (
       <div className="container mx-auto p-4">
@@ -100,7 +132,7 @@ function SeasonDetails({ podcastDetails, isloading, error }) {
       {/* Season Info */}
       <div className="md:flex gap-6 mb-6">
         {/* Season Image */}
-        <div className="md:w-full mb-4 md:mb-0">
+        <div className="md:w-1/3 mb-4 md:mb-0">
           {selectedSeason.image ? (
             <img
               src={selectedSeason.image}
