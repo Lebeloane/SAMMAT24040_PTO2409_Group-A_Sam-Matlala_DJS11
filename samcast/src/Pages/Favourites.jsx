@@ -1,11 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * Favourites Component
+ *
+ * This component displays the user's favorite podcast episodes.
+ * It allows users to sort their favorites and remove them from the list.
+ * @returns {JSX.Element}
+ * @event {Function} removeFavorite - Function to remove a podcast episode from favorites
+ * @event {Function} setSortOrder - Function to set the sorting order of the favorites
+ */
 function Favourites() {
-
+    // state managemant for favorites and sort order
   const [favorites, setFavorites] = useState([]);
   const [sortOrder, setSortOrder] = useState('lastAdded');
 
+  // Load favorites from localStorage on component mount
+  // This effect will run when the component mounts.
   useEffect(() => {
     const storedFavorites = localStorage.getItem('podcastFavorites');
     if (storedFavorites) {
@@ -13,6 +24,9 @@ function Favourites() {
     }
   }, []);
 
+
+  // Function to remove a podcast episode from favorites
+  // This function is called when the user clicks the remove button for a favorite episode.
   const removeFavorite = (podcastId, seasonNumber, episodeNumber) => {
     const updatedFavorites = favorites.filter(
       fav => !(fav.podcastId === podcastId &&
@@ -24,6 +38,8 @@ function Favourites() {
   };
 
 
+  // Sorting logic
+  // This effect will run whenever the favorites or sortOrder changes.
   const sortedFavorites = [...favorites].sort((a, b) => {
     switch (sortOrder) {
       case 'az':
@@ -31,10 +47,10 @@ function Favourites() {
       case 'za':
         return b.episode.title.localeCompare(a.episode.title);
       case 'recentlyAdded':
-        return 1; 
+        return 1; // reverse order of original
       case 'lastAdded':
       default:
-        return -1;
+        return -1; // keep original
     }
   });
 
