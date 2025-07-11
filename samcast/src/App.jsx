@@ -7,7 +7,8 @@ import Home from "./Pages/Home"
 import Loading from "./Components/Loading"
 import PodcastLists from "./Pages/PodcastLists"
 import PodcastDetails from "./Components/PodcastDetails"
-import SeasonDetails from "./Components/SeasonDetails" 
+import SeasonDetails from "./Components/SeasonDetails"
+import Favorites from "./Pages/Favourites"
 
 /**
  * App Component
@@ -115,6 +116,7 @@ function App() {
               error={error}
             />}
           />
+          <Route path="/favourites" element={<Favorites />} />
         </Route>
       </Routes>
     </Router>
