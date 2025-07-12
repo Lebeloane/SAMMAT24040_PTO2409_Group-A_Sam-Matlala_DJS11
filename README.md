@@ -70,4 +70,4 @@ The SamCast app includes several key features that enhance functionality and use
 
 
 # Website link
-## [SamCast App](https://.netlify.app/)
+## [SamCast App](https://grand-piroshki-cb5b30.netlify.app/)
