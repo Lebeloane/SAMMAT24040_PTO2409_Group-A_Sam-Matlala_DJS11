@@ -32,7 +32,7 @@ function App() {
    * Base URL for the podcast Api
    * @constant {string}
    */
-  const URL = 'https://grand-piroshki-cb5b30.netlify.app/'
+  const URL = 'https://podcast-api.netlify.app/'
 
   // Fetching podcast data from the API
   /**
